@@ -8,10 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		AE7405EE2DEA0DCD004E5389 /* RobToolsLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = AE7405ED2DEA0DCD004E5389 /* RobToolsLibrary */; };
+		AE7406422DEB7665004E5389 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE7406412DEB7665004E5389 /* CloudKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		AE7405802DDA7F42004E5389 /* TickerWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TickerWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE7406412DEB7665004E5389 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.5.sdk/System/Library/Frameworks/CloudKit.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -41,6 +43,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE7405EE2DEA0DCD004E5389 /* RobToolsLibrary in Frameworks */,
+				AE7406422DEB7665004E5389 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,6 +54,7 @@
 			isa = PBXGroup;
 			children = (
 				AE7405822DDA7F42004E5389 /* TickerWatch */,
+				AE7406402DEB7664004E5389 /* Frameworks */,
 				AE7405812DDA7F42004E5389 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -61,6 +65,14 @@
 				AE7405802DDA7F42004E5389 /* TickerWatch.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		AE7406402DEB7664004E5389 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AE7406412DEB7665004E5389 /* CloudKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

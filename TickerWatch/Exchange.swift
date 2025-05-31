@@ -120,7 +120,7 @@ class Exchange
             callExchange(item: item, url: urlString)
             { jsonObject in
                 
-               // print(jsonObject)
+                RLog.log(msg:"\(item.symbol): \(jsonObject)")
                 
                 item.price = (jsonObject["price"] as AnyObject).floatValue ?? 0.0
                 item.lowprice = min(item.lowprice,item.price)
