@@ -11,7 +11,7 @@ import SwiftData
 @Model
 class Item
 {
-    var symbol: String
+    var symbol: String = "symbol"
     var name: String?
     var exchange: String?
     var price: Float = 0.0
