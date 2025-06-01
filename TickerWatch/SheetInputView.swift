@@ -31,7 +31,13 @@ struct SheetInputView: View
                 contextView.newSymbol(newsymbol: enteredText)
                 dismiss()
             }
+            
             .padding()
+        }
+        .onSubmit
+        {
+            contextView.newSymbol(newsymbol: enteredText)
+            dismiss()
         }
     }
 }

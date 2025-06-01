@@ -34,5 +34,11 @@ struct APIKeyInputView: View
             }
             .padding()
         }
+        .onSubmit
+        {
+            contextView.newSymbol(newsymbol: apikeyText)
+            dismiss()
+        }
     }
 }
+

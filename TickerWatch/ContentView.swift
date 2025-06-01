@@ -110,18 +110,6 @@ struct ContentView: View
                     }
                 }
             }
-            
-           if quotetimer == nil
-            {
-                quotetimer = Timer.scheduledTimer(withTimeInterval: 3600, repeats: true)
-                { timer in
-                    
-                    for item in items
-                    {
-                        exchange.getQuote(item: item,force: true)
-                    }
-                }
-            }
         }
     }
     
@@ -167,8 +155,7 @@ struct ContentView: View
     
     private func get(item:Item,force:Bool)
     {
-        exchange.getPrice(item: item,force: true) // always get price??
-        exchange.getQuote(item: item,force: force)
+        exchange.getPrice(item: item,force: true) 
     }
     
     

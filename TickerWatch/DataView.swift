@@ -40,8 +40,18 @@ struct DataView : View
             
             Text("market: is \(item.isMarketOpen == true ? "open" : "closed")")
         }
+        .onChange(of: item,
+        { oldValue, newValue in
+            updateItem(item: item)
+        })
         .font(.headline)
         .foregroundStyle(.white)
+    }
+    
+    func updateItem(item:Item)
+    {
+        let exchange = Exchange()
+        exchange.getQuote(item: item, force: true)
     }
     
     func formatDate(timeinsecs:TimeInterval) -> String
