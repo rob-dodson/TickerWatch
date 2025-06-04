@@ -8,7 +8,10 @@ import SwiftUI
 
 struct DataView : View
 {
+    @Environment(\.dismiss) var dismiss
+    
     var item:Item
+    
     
     var body: some View
     {
@@ -39,7 +42,13 @@ struct DataView : View
             priceBlock(label:"52 week high:", value:item.high52)
             
             Text("market: is \(item.isMarketOpen == true ? "open" : "closed")")
+            
+            Button("Close")
+            {
+                dismiss()
+            }
         }
+        .padding()
         .onChange(of: item,
         { oldValue, newValue in
             updateItem(item: item)
@@ -48,11 +57,13 @@ struct DataView : View
         .foregroundStyle(.white)
     }
     
+    
     func updateItem(item:Item)
     {
         let exchange = Exchange()
-        exchange.getQuote(item: item, force: true)
+        exchange.getQuote(item: item, force: true) //when does this get called?
     }
+    
     
     func formatDate(timeinsecs:TimeInterval) -> String
     {
@@ -63,6 +74,7 @@ struct DataView : View
         formatter.timeStyle = .medium
         return formatter.string(from: date)
     }
+    
     
     func priceBlock(label:String,value:Float) -> some View
     {

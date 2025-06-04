@@ -26,14 +26,18 @@ struct SheetInputView: View
                 .textFieldStyle(.roundedBorder)
                 .padding()
             
+            Button("Cancel")
+            {
+                dismiss()
+            }
+            
             Button("Submit")
             {
                 contextView.newSymbol(newsymbol: enteredText)
                 dismiss()
             }
-            
-            .padding()
         }
+        .padding()
         .onSubmit
         {
             contextView.newSymbol(newsymbol: enteredText)

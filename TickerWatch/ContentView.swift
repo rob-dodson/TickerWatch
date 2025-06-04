@@ -11,19 +11,28 @@ import RobToolsLibrary
 
 
 var pricetimer : Timer?
-var quotetimer : Timer?
+var selectedItem : Item?
+
 
 struct ContentView: View
 {
     @Environment(\.modelContext) private var modelContext
     
     @Query private var items: [Item]
+    
     @State private var showSymbolSheet = false
     @State private var showAPIKeySheet = false
+    @State private var showDataSheet = false
+    
     @State private var newSymbol = ""
     @State private var newAPIKey = ""
     @State var navIsVisible : NavigationSplitViewVisibility = .automatic
+    
+    
+    let doticker = true
+    
     var exchange = Exchange()
+    
     
     init()
     {
@@ -32,59 +41,22 @@ struct ContentView: View
     
     var body: some View
     {
-        NavigationSplitView(columnVisibility: $navIsVisible)
+        List
         {
-            List
-            {
-                ForEach(items.sorted { $0.symbol < $1.symbol })
-                { item in
-                    
-                    NavigationLink
-                    {
-                       DataView(item: item)
-                    }
-                    label:
-                    {
-                        HStack
-                        {
-                            Text("\(item.symbol)")
-                                .font(.headline)
-                                .foregroundStyle(.green)
-                            
-                            DataView.truncPrice(value: item.price)
-                                .font(.headline)
-                                .foregroundStyle(.white)
-                            
-                            if item.change > 0
-                            {
-                                Image(systemName: "arrow.up")
-                                    .foregroundStyle(.green)
-                            }
-                            else
-                            {
-                                Image(systemName: "arrow.down")
-                                    .foregroundStyle(.red)
-                            }
-                            
-                        }
-                    }
-                }
-                .onDelete(perform: deleteItems)
-            }
-            .toolbar
-            {
-                ToolbarItem
-                {
-                    Button(action: addSymbolItem)
-                    {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
+            ForEach(items, id: \.self)
+            { item in
+                setNavLink(item: item)
             }
         }
-        detail:
+        .toolbar
         {
-            Text("Select an item")
+            ToolbarItem
+            {
+                Button(action: addSymbolItem)
+                {
+                    Label("Add Item", systemImage: "plus")
+                }
+            }
         }
         .sheet(isPresented: $showSymbolSheet)
         {
@@ -94,24 +66,82 @@ struct ContentView: View
         {
             callAPIKeyPanel()
         }
+        .sheet(isPresented: $showDataSheet)
+        {
+            if let selecteditem = selectedItem
+            {
+                DataView(item: selecteditem)
+            }
+        }
         .onAppear()
         {
-            checkForAPIKey()
-            initTickers()
+            setOnAppear( )
+        }
+    }
+    
+    
+    func setNavLink(item: Item) -> some View
+    {
+        HStack
+        {
+            Text("\(item.symbol)")
+                .font(.headline)
+                .foregroundStyle(.green)
             
-            if pricetimer == nil
+            DataView.truncPrice(value: item.price)
+                .font(.headline)
+                .foregroundStyle(.white)
+            
+            if item.change > 0
             {
-                pricetimer = Timer.scheduledTimer(withTimeInterval: 300, repeats: true)
-                { timer in
-
+                Image(systemName: "arrow.up")
+                    .foregroundStyle(.green)
+            }
+            else
+            {
+                Image(systemName: "arrow.down")
+                    .foregroundStyle(.red)
+            }
+        }
+        .onTapGesture
+        {
+            selectedItem = item
+            showDataSheet = true
+        }
+    }
+    
+    
+    func setOnAppear()
+    {
+        checkForAPIKey()
+     
+        if doticker
+        {
+            initTickers()
+        }
+        
+        if pricetimer == nil
+        {
+            pricetimer = Timer.scheduledTimer(withTimeInterval: 300,repeats: true)
+            { timer in
+                
+                if doticker
+                {
                     for item in items
                     {
                         exchange.getPrice(item: item,force: true)
+                        //if (item.symbol == selectedItem?.symbol)
+                       // {
+                       //     exchange.getQuote(item: item, force: true)
+                       // }
                     }
                 }
             }
         }
     }
+    
+    
+    
     
     
     func checkForAPIKey()
