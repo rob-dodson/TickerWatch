@@ -41,12 +41,9 @@ struct ContentView: View
     
     var body: some View
     {
-        List
-        {
-            ForEach(items, id: \.self)
-            { item in
+        List(items.sorted(by: { $0.symbol < $1.symbol }))
+        { item in
                 setNavLink(item: item)
-            }
         }
         .toolbar
         {
@@ -130,18 +127,11 @@ struct ContentView: View
                     for item in items
                     {
                         exchange.getPrice(item: item,force: true)
-                        //if (item.symbol == selectedItem?.symbol)
-                       // {
-                       //     exchange.getQuote(item: item, force: true)
-                       // }
                     }
                 }
             }
         }
     }
-    
-    
-    
     
     
     func checkForAPIKey()
@@ -178,14 +168,8 @@ struct ContentView: View
     {
         for item in items
         {
-            get(item: item,force: true)
+            exchange.getPrice(item: item,force: true)
         }
-    }
-    
-    
-    private func get(item:Item,force:Bool)
-    {
-        exchange.getPrice(item: item,force: true) 
     }
     
     
@@ -201,15 +185,18 @@ struct ContentView: View
         }
     }
     
+    
     func newSymbol(newsymbol:String)
     {
          withAnimation
          {
              let newItem = Item(symbol:newsymbol)
              modelContext.insert(newItem)
-             get(item: newItem,force: true)
+             exchange.getPrice(item: newItem,force: true)
+             exchange.getQuote(item: newItem, force: true)
          }
     }
+    
     
     private func addSymbolItem()
     {

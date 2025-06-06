@@ -10,7 +10,7 @@ struct DataView : View
 {
     @Environment(\.dismiss) var dismiss
     
-    var item:Item
+    @State var item:Item
     
     
     var body: some View
@@ -49,6 +49,10 @@ struct DataView : View
             }
         }
         .padding()
+        .onAppear()
+        {
+            updateItem(item: item)
+        }
         .onChange(of: item,
         { oldValue, newValue in
             updateItem(item: item)
@@ -61,7 +65,7 @@ struct DataView : View
     func updateItem(item:Item)
     {
         let exchange = Exchange()
-        exchange.getQuote(item: item, force: true) //when does this get called?
+        exchange.getQuote(item: item, force: true)
     }
     
     
