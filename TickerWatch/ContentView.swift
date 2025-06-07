@@ -126,7 +126,7 @@ struct ContentView: View
                 {
                     for item in items
                     {
-                        exchange.getPrice(item: item,force: true)
+                        exchange.getPrice(item: item,force: false)
                     }
                 }
             }
