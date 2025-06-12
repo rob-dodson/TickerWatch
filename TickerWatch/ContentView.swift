@@ -51,9 +51,18 @@ struct ContentView: View
             {
                 Button(action: addSymbolItem)
                 {
-                    Label("Add Item", systemImage: "plus")
+                    Label("Add Symbol", systemImage: "plus")
                 }
             }
+            
+            ToolbarItem
+            {
+                Button(action: addAPIKey)
+                {
+                    Label("Enter APIkey", systemImage: "key")
+                }
+            }
+            
         }
         .sheet(isPresented: $showSymbolSheet)
         {
@@ -203,6 +212,10 @@ struct ContentView: View
         showSymbolSheet = true
     }
 
+    private func addAPIKey()
+    {
+        showAPIKeySheet = true
+    }
     
     private func deleteItems(offsets: IndexSet)
     {
