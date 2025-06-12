@@ -27,16 +27,26 @@ struct APIKeyInputView: View
                 .textFieldStyle(.roundedBorder)
                 .padding()
             
-            Button("Submit")
+            HStack
             {
-                contextView.newAPIKey(newapikey: apikeyText)
-                dismiss()
+                Button("Cancel")
+                {
+                    dismiss()
+                }
+                
+                Button("Submit")
+                {
+                    contextView.newAPIKey(newapikey: apikeyText)
+                    dismiss()
+                }
+                .keyboardShortcut(.defaultAction)
+                
             }
             .padding()
         }
         .onSubmit
         {
-            contextView.newSymbol(newsymbol: apikeyText)
+            contextView.newAPIKey(newapikey: apikeyText)
             dismiss()
         }
     }

@@ -44,6 +44,13 @@ struct ContentView: View
         List(items.sorted(by: { $0.symbol < $1.symbol }))
         { item in
                 setNavLink(item: item)
+                .contextMenu
+                {
+                    Button("Delete", role: .destructive)
+                    {
+                        modelContext.delete( item)
+                    }
+                }
         }
         .toolbar
         {
